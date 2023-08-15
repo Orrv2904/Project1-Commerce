@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'auctions',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -42,6 +41,10 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     #end Cloudinary
+    #newadmin
+    'admin_volt.apps.AdminVoltConfig',
+    'django.contrib.admin',
+    #end newadmin
 ]
 
 MIDDLEWARE = [
@@ -138,3 +141,6 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '294527718744669',
     'API_SECRET': 'ZZE29WW763hftb2Oiq7QmeFvCQg'
 }
+
+LOGIN_REDIRECT_URL = '/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
