@@ -5,14 +5,16 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .form import ListingForm
 from django.contrib import messages
-from .models import Listing, User
+from .models import Listing, User, Category
 
 
 
 def index(request):
     listings = Listing.objects.filter(isActive=True)
+    allCategories = Category.objects.all()
     context = {
-        'listings': listings
+        'listings': listings,
+        'allCategories': allCategories
     }
     return render(request, "auctions/index.html", context)
 
