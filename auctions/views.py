@@ -5,12 +5,16 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .form import ListingForm
 from django.contrib import messages
+from .models import Listing, User
 
-from .models import User
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    listings = Listing.objects.all()
+    context = {
+        'listings': listings
+    }
+    return render(request, "auctions/index.html", context)
 
 
 def createListing(request):
@@ -26,9 +30,10 @@ def createListing(request):
             messages.error(request, "Critical error")
     else:
         form = ListingForm()
-    
+        listings = Listing.objects.all()
     context = {
         'form': form,
+        'listings': listings
     }
     return render(request, "auctions/create.html", context)
 

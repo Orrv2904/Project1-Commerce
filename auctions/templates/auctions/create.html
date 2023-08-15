@@ -26,7 +26,7 @@
 
   <div class="mb-3">
     <label for="id_imageUrl" class="form-label h4">Image:</label>
-    <input type="file" name="imageUrl" accept="image/*" class="form-control" id="id_imageUrl">
+    <input required type="file" name="imageUrl" accept="image/*" class="form-control" id="id_imageUrl">
   </div>
 
   <div class="mb-3">
@@ -36,7 +36,7 @@
 
   <div class="mb-3">
     <label for="id_category" class="form-label h4">Category:</label>
-    <select name="category" class="form-select" id="id_category">
+    <select required name="category" class="form-select" id="id_category">
       <option value="" selected>---------</option>
       <option value="5">Category: Single</option>
       <option value="6">Category: Album</option>
