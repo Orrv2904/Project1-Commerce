@@ -8,6 +8,9 @@ class User(AbstractUser):
 class Category(models.Model):
     categoryName = models.CharField(max_length=50)
 
+    def __str__(self):
+        return f"Category: {self.categoryName}"
+
 class Listing(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
@@ -18,3 +21,6 @@ class Listing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name="category")
+
+    def __str__(self):
+        return f"The title of the song: {self.title} - and is a: {self.category.categoryName}"
