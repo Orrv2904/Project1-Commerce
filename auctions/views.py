@@ -17,9 +17,9 @@ def createListing(request):
     if request.method == "POST":
         form = ListingForm(request.POST, request.FILES)
         if form.is_valid():
-            listing = form.save(commit=False)  # Crea la instancia, pero no guarda en la base de datos todavía
-            listing.owner = request.user  # Asigna el propietario a la instancia
-            listing.save()  # Ahora guarda la instancia en la base de datos
+            listing = form.save(commit=False)
+            listing.owner = request.user
+            listing.save()
             messages.success(request, "New listing added successfully!")
             return redirect('create')
         else:
