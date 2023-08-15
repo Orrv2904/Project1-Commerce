@@ -10,7 +10,7 @@ from .models import Listing, User
 
 
 def index(request):
-    listings = Listing.objects.all()
+    listings = Listing.objects.filter(isActive=True)
     context = {
         'listings': listings
     }
