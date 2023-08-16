@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{ listing.imageUrl.url }}" alt="{{ listing.title }}" class="img-fluid custom-small-image">
+            <style>
+                .custom-small-image {
+                  width: 600px;
+                  height: 400px;
+                  object-fit: cover;
+                }
+              </style>
+        </div>
+        <div class="col-md-8">
+            <h2>{{ listing.title }}</h2>
+            <p>{{ listing.description }}</p>
+            <p>{{ listing.price }}&nbsp;$</p>
+            <button class="btn btn-primary">Comprar Ahora</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -8,6 +8,11 @@ from django.contrib import messages
 from .models import Listing, User, Category
 from django.core.paginator import Paginator
 
+def view_listing(request, id):
+    listing_data = Listing.objects.get(pk=id)
+    return render(request, "auctions/listing.html", {
+        "listing": listing_data,
+    })
 
 def index(request):
     listings = Listing.objects.filter(isActive=True)
