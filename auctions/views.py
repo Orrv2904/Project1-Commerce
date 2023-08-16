@@ -8,11 +8,27 @@ from django.contrib import messages
 from .models import Listing, User, Category
 from django.core.paginator import Paginator
 
-def view_listing(request, id):
+def listing(request, id):
     listing_data = Listing.objects.get(pk=id)
+    isListingInWatchlist = request.user in listing_data.watchlist.all()
     return render(request, "auctions/listing.html", {
         "listing": listing_data,
+        "isListingInWatchlist": isListingInWatchlist,
     })
+
+def removeWatchlist(request, id):
+    listingData = Listing.objects.get(pk=id)
+    currentUser = request.user
+    listingData.watchlist.remove(currentUser)
+    return HttpResponseRedirect(reverse("listing",args=(id, )))
+
+
+def addWatchlist(request, id):
+    listingData = Listing.objects.get(pk=id)
+    currentUser = request.user
+    listingData.watchlist.add(currentUser)
+    return HttpResponseRedirect(reverse("listing",args=(id, )))
+
 
 def index(request):
     listings = Listing.objects.filter(isActive=True)
