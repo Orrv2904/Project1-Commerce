@@ -11,7 +11,7 @@ from django.core.paginator import Paginator
 
 def index(request):
     listings = Listing.objects.filter(isActive=True)
-    paginator = Paginator(listings, 2)
+    paginator = Paginator(listings, 5)
     page_number = request.GET.get('page')
     page_listings = paginator.get_page(page_number)
 
@@ -23,19 +23,23 @@ def index(request):
 
 def displayCategory(request):
     if request.method == "POST":
-        category_id = request.POST['category']
+        category_id = request.POST.get('category')
         try:
             category = get_object_or_404(Category, pk=category_id)
         except Category.DoesNotExist:
             return HttpResponse("Not Found")
-            pass
         else:
             activeListings = Listing.objects.filter(isActive=True, category=category)
+            paginator = Paginator(activeListings, 5)
+            page_number = request.GET.get('page')
+            page_listings = paginator.get_page(page_number)
             allCategories = Category.objects.all()
             return render(request, "auctions/index.html", {
-                "listings": activeListings,
+                "listings": page_listings,
                 "categories": allCategories,
             })
+    else:
+        return redirect('index')
 
 def createListing(request):
     if request.method == "POST":
