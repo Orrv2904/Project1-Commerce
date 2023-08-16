@@ -5,28 +5,33 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .form import ListingForm
 from django.contrib import messages
-from .models import Listing, User, Category
+from .models import Listing, User, Category, Comment
 from django.core.paginator import Paginator
 
 def listing(request, id):
     listing_data = Listing.objects.get(pk=id)
     isListingInWatchlist = request.user in listing_data.watchlist.all()
+    allComments = Comment.objects.filter(listing=listing_data)  # Cambia aquí
+
     return render(request, "auctions/listing.html", {
         "listing": listing_data,
         "isListingInWatchlist": isListingInWatchlist,
+        "allComments": allComments,
     })
 
 
 def addComment(request, id):
     currentUser = request.user
     listingData = Listing.objects.get(pk=id)
-    message = request.POST['newComment']
+    message = request.POST['comment']
 
     newComment = Comment(
         author = currentUser,
         listing = listingData,
         message = message,
     )
+
+    newComment.save()
     return HttpResponseRedirect(reverse("listing",args=(id, )))
 
 
