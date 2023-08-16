@@ -16,6 +16,20 @@ def listing(request, id):
         "isListingInWatchlist": isListingInWatchlist,
     })
 
+
+def addComment(request, id):
+    currentUser = request.user
+    listingData = Listing.objects.get(pk=id)
+    message = request.POST['newComment']
+
+    newComment = Comment(
+        author = currentUser,
+        listing = listingData,
+        message = message,
+    )
+    return HttpResponseRedirect(reverse("listing",args=(id, )))
+
+
 def displayWatchlist(request):
     currentUser = request.user
     listings = currentUser.listingWatchlist.all()

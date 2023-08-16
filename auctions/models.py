@@ -25,3 +25,11 @@ class Listing(models.Model):
 
     def __str__(self):
         return f"The title of the song: {self.title} - and is a: {self.category.categoryName}"
+    
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="userComment")
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=True, null=True, related_name="listingComment")
+    message = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.author} commented on {self.listing}"
