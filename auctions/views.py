@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .form import ListingForm
 from django.contrib import messages
@@ -10,14 +10,28 @@ from .models import Listing, User, Category
 
 
 def index(request):
-    listings = Listing.objects.filter(isActive=True)
+    activeListings = Listing.objects.filter(isActive=True)
     allCategories = Category.objects.all()
-    context = {
-        'listings': listings,
-        'allCategories': allCategories
-    }
-    return render(request, "auctions/index.html", context)
+    return render(request, "auctions/index.html", {
+        "listings": activeListings,
+        "categories": allCategories,
+    })
 
+def displayCategory(request):
+    if request.method == "POST":
+        category_id = request.POST['category']
+        try:
+            category = get_object_or_404(Category, pk=category_id)
+        except Category.DoesNotExist:
+            return HttpResponse("Not Found")
+            pass
+        else:
+            activeListings = Listing.objects.filter(isActive=True, category=category)
+            allCategories = Category.objects.all()
+            return render(request, "auctions/index.html", {
+                "listings": activeListings,
+                "categories": allCategories,
+            })
 
 def createListing(request):
     if request.method == "POST":
@@ -33,9 +47,11 @@ def createListing(request):
     else:
         form = ListingForm()
         listings = Listing.objects.all()
+        allCategories = Category.objects.all()
     context = {
         'form': form,
-        'listings': listings
+        'listings': listings,
+        "allCategories": allCategories,
     }
     return render(request, "auctions/create.html", context)
 

@@ -38,8 +38,9 @@
     <label for="id_category" class="form-label h4">Category:</label>
     <select required name="category" class="form-select" id="id_category">
       <option value="" selected>---------</option>
-      <option value="">Category: Single</option>
-      <option value="">Category: Album</option>
+      {% for catego in allCategories %}
+      <option value="{{ catego.id }}">Category: {{ catego.categoryName }}</option>
+      {% endfor %}
     </select>
   </div>
 

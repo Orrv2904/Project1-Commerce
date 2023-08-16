@@ -69,31 +69,14 @@
   <form action="{% url 'displayCategory' %}" method="post">
     {% csrf_token %}
     <label for="category">Choose a category:</label>
-    <div class="input-group">
-        <select required name="category" class="form-select" id="id_category">
-            <option value="" selected>---------</option>
-            {% for catego in allCategories %}
-            <option value="{{ catego }}">{{ catego }}</option>
-            {% endfor %}
-        </select>
-        <button type="button" class="btn btn-primary  ms-2" id="selectButton">Select</button>
-    </div>
-    <input type="hidden" name="category" id="selectedCategory">
-</form>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const selectButton = document.getElementById("selectButton");
-        const select = document.getElementById("id_category");
-        const selectedCategory = document.getElementById("selectedCategory");
-
-        selectButton.addEventListener("click", function() {
-            const selectedValue = select.options[select.selectedIndex].value;
-            selectedCategory.value = selectedValue;
-        });
-    });
-</script>
-
+    <select required name="category" class="form-select w-25" id="category">
+      <option value="" selected>---------</option>
+      {% for catego in categories %}
+      <option value="{{ catego.id }}">{{ catego.categoryName }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-warning">Select</button>
+  </form>
 
   <div class="mt-4">
   </div>
