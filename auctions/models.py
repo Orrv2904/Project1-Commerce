@@ -21,6 +21,7 @@ class Listing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name="category")
+    watchlist = models.ManyToManyField(User, blank=True, null=True, related_name="listingWatchlist")
 
     def __str__(self):
         return f"The title of the song: {self.title} - and is a: {self.category.categoryName}"
