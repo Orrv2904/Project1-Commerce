@@ -19,9 +19,13 @@ def listing(request, id):
 def displayWatchlist(request):
     currentUser = request.user
     listings = currentUser.listingWatchlist.all()
+    items_per_page = 5
+    paginator = Paginator(listings, items_per_page)
+    page_number = request.GET.get('page')
+    page_listings = paginator.get_page(page_number)
     return render(request, "auctions/watchlist.html",{
-        "listings": listings
-    }) 
+        "listings": page_listings
+    })
 
 def removeWatchlist(request, id):
     listingData = Listing.objects.get(pk=id)
