@@ -41,7 +41,7 @@ def createListing(request):
             listing.owner = request.user
             listing.save()
             messages.success(request, "New listing added successfully!")
-            return redirect('create')
+            return redirect('index')
         else:
             messages.error(request, "Critical error")
     else:

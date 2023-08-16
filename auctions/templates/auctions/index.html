@@ -66,17 +66,20 @@
     </div>
   </div>
 
-  <form action="{% url 'displayCategory' %}" method="post">
+  <form action="{% url 'displayCategory' %}" method="post" class="d-flex align-items-center justify-content-end">
     {% csrf_token %}
-    <label for="category">Choose a category:</label>
-    <select required name="category" class="form-select w-25" id="category">
-      <option value="" selected>---------</option>
-      {% for catego in categories %}
-      <option value="{{ catego.id }}">{{ catego.categoryName }}</option>
-      {% endfor %}
-    </select>
+    <div class="form-group mb-0 me-2">
+      <label for="category" class="mb-0">Choose a category:</label>
+      <select required name="category" class="form-select" id="category">
+        <option value="" selected>---------</option>
+        {% for catego in categories %}
+        <option value="{{ catego.id }}">{{ catego.categoryName }}</option>
+        {% endfor %}
+      </select>
+    </div>
     <button type="submit" class="btn btn-warning">Select</button>
   </form>
+  
 
   <div class="mt-4">
   </div>
@@ -96,7 +99,7 @@
           </style>
           <div class="media-body tm-bg-gray">
             <div class="tm-description-box">
-              <h5 class="tm-text-blue">{{ listing.title }}</h5>
+              <h5 class="tm-text-blue">{{ listing.title }} - {{ listing.category.categoryName }}</h5>
               <p class="mb-0">{{ listing.description }}</p>
             </div>
             <div class="tm-buy-box">
