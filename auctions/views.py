@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .form import ListingForm
 from django.contrib import messages
-from .models import Listing, User, Category, Comment
+from .models import Listing, User, Category, Comment, Bid
 from django.core.paginator import Paginator
 
 def listing(request, id):
@@ -99,6 +99,14 @@ def createListing(request):
             listing = form.save(commit=False)
             listing.owner = request.user
             listing.save()
+
+            price = form.cleaned_data['price']
+            bid = Bid(bid=float(price))
+            bid.save()
+            
+            listing.price = bid
+            listing.save()
+            
             messages.success(request, "New listing added successfully!")
             return redirect('index')
         else:
@@ -113,6 +121,7 @@ def createListing(request):
         "allCategories": allCategories,
     }
     return render(request, "auctions/create.html", context)
+
 
 
         
