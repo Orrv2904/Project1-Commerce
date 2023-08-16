@@ -6,14 +6,18 @@ from django.urls import reverse
 from .form import ListingForm
 from django.contrib import messages
 from .models import Listing, User, Category
-
+from django.core.paginator import Paginator
 
 
 def index(request):
-    activeListings = Listing.objects.filter(isActive=True)
+    listings = Listing.objects.filter(isActive=True)
+    paginator = Paginator(listings, 2)
+    page_number = request.GET.get('page')
+    page_listings = paginator.get_page(page_number)
+
     allCategories = Category.objects.all()
     return render(request, "auctions/index.html", {
-        "listings": activeListings,
+        "listings": page_listings,
         "categories": allCategories,
     })
 
