@@ -31,7 +31,7 @@
 
   <div class="mb-3">
     <label for="id_price" class="form-label h4">Price:</label>
-    <input type="number" name="price" step="any" required class="form-control" id="id_price">
+    <input type="number" name="custom_price" step="any" required class="form-control" id="id_price">
   </div>
 
   <div class="mb-3">
@@ -48,6 +48,8 @@
     <button type="submit" class="btn btn-primary">Create Listing</button>
   </div>
 </form>
+
+
 
 {% if form.errors %}
 <div class="errors">

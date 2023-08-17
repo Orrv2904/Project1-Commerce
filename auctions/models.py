@@ -11,11 +11,19 @@ class Category(models.Model):
     def __str__(self):
         return f"Category: {self.categoryName}"
 
+class Bid(models.Model):
+    bid = models.FloatField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="userBid")
+
+    def __str__(self):
+        return str(self.bid)
+
+
 class Listing(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
     imageUrl = models.ImageField(upload_to='images/commerce/', blank=True, default='default_image_url')
-    price = models.FloatField()
+    price = models.ForeignKey(Bid, on_delete=models.CASCADE, blank=True, null=True, related_name="bidPrice")
     isActive = models.BooleanField(default=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user")
     created_at = models.DateTimeField(auto_now_add=True)
