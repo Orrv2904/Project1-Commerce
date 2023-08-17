@@ -102,9 +102,14 @@ def createListing(request):
 
             custom_price = form.cleaned_data.get('custom_price')
             if custom_price is not None:
-                bid = Bid.objects.create(bid=custom_price)
-                bid.save()
-                listing.price = bid
+                existing_bid = Bid.objects.filter(bid=custom_price).first()
+                if existing_bid:
+                    listing.price = existing_bid
+                else:
+                    bid = Bid.objects.create(bid=custom_price)
+                    bid.save()
+                    listing.price = bid
+
                 listing.save()
 
             messages.success(request, "New listing added successfully!")
@@ -121,6 +126,7 @@ def createListing(request):
         "allCategories": allCategories,
     }
     return render(request, "auctions/create.html", context)
+
 
 
         

@@ -8,13 +8,18 @@ class ListingForm(forms.ModelForm):
         model = Listing
         exclude = ['id', 'owner', 'isActive', 'price']
 
-    def save(self, commit=True):
+    def create_custom_price_bid(self):
         custom_price = self.cleaned_data.get('custom_price')
-        listing = super().save(commit=False)
         if custom_price is not None:
             bid = Bid.objects.create(bid=custom_price)
-            bid.save()
-            listing.price = bid
+            return bid
+        return None
+
+    def save(self, commit=True):
+        listing = super().save(commit=False)
+        custom_price_bid = self.create_custom_price_bid()
+        if custom_price_bid:
+            listing.price = custom_price_bid
         if commit:
             listing.save()
         return listing
