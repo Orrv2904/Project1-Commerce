@@ -6,17 +6,46 @@ from django.urls import reverse
 from .form import ListingForm
 from django.contrib import messages
 from .models import Listing, User, Category, Comment, Bid
+from django.db.models import F
 from django.core.paginator import Paginator
 
 def listing(request, id):
     listing_data = Listing.objects.get(pk=id)
     isListingInWatchlist = request.user in listing_data.watchlist.all()
     allComments = Comment.objects.filter(listing=listing_data)
-
+    isOwner = request.user.username == listing_data.owner.username 
     return render(request, "auctions/listing.html", {
         "listing": listing_data,
         "isListingInWatchlist": isListingInWatchlist,
         "allComments": allComments,
+        "isOwner": isOwner,
+    })
+
+def my_listings(request):
+    user_winning_listings = Listing.objects.filter(price__user=request.user, price__bid=F('price__bid'))
+    page_number = request.GET.get('page', 1)
+    items_per_page = 5
+    paginator = Paginator(user_winning_listings, items_per_page)
+    page = paginator.get_page(page_number)
+    
+    return render(request, "auctions/my_listings.html", {
+        "user_winning_listings": page,
+    })
+
+def closeAuction(request, id):
+    listingData = Listing.objects.get(pk=id)
+    listingData.isActive = False
+    listingData.save()
+    isOwner = request.user.username == listingData.owner.username 
+    isListingInWatchlist = request.user in listingData.watchlist.all()
+    allComments = Comment.objects.filter(listing=listingData)
+    return render(request, "auctions/listing.html", {
+        "listing": listingData,
+        "isListingInWatchlist": isListingInWatchlist,
+        "allComments": allComments,
+        "isOwner": isOwner,
+        "update": True,
+        "message": "Congratulations! Your auction is closed."
     })
 
 
@@ -39,7 +68,8 @@ def addBid(request, id):
     newBid = request.POST['newBid']
     listingData = Listing.objects.get(pk=id)
     isListingInWatchlist = request.user in listingData.watchlist.all()
-    allComments = Comment.objects.filter(listing=listingData)  # Cambia aquí
+    allComments = Comment.objects.filter(listing=listingData)
+    isOwner = request.user.username == listingData.owner.username 
     if int(newBid) > listingData.price.bid:
         updateBid = Bid(user=request.user, bid=int(newBid))
         updateBid.save()
@@ -52,6 +82,7 @@ def addBid(request, id):
             "update": True,
             "isListingInWatchlist": isListingInWatchlist,
             "allComments": allComments,
+            "isOwner": isOwner,
         })
     else:
         error_message = "Bid update failed. Your bid should be higher than the current highest bid."
@@ -61,6 +92,7 @@ def addBid(request, id):
             "update": False,
             "isListingInWatchlist": isListingInWatchlist,
             "allComments": allComments,
+            "isOwner": isOwner,
         })
 
     
