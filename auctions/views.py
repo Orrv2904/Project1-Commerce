@@ -35,6 +35,29 @@ def addComment(request, id):
     return HttpResponseRedirect(reverse("listing",args=(id, )))
 
 
+def addBid(request, id):
+    newBid = request.POST['newBid']
+    listingData = Listing.objects.get(pk=id)
+    if int(newBid) > listingData.price.bid:
+        updateBid = Bid(user=request.user, bid=int(newBid))
+        updateBid.save()
+        listingData.price = updateBid
+        listingData.save()
+        success_message = "Bid was updated successfully"
+        return render(request, "auctions/listing.html",{
+            "listing": listingData,
+            "success_message": success_message,
+            "update": True
+        })
+    else:
+        error_message = "Bid update failed. Your bid should be higher than the current highest bid."
+        return render(request, "auctions/listing.html",{
+            "listing": listingData,
+            "error_message": error_message,
+            "update": False
+        })
+
+    
 def displayWatchlist(request):
     currentUser = request.user
     listings = currentUser.listingWatchlist.all()
