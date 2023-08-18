@@ -1,24 +1,169 @@
-{% extends "auctions/layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block body %}
+<head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <h2>Login</h2>
+<title>
+    Auctions
+</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="title" content="Volt - Free Bootstrap 5 Dashboard">
+<meta name="author" content="">
+<meta name="description" content="">
+<meta name="keywords" content="" />
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://demo.themesberg.com/volt">
+<meta property="og:title" content="Volt - Free Bootstrap 5 Dashboard">
+<meta property="og:description" content="Volt is a free and open source Bootstrap 5 Admin Dashboard featuring 11 example pages, 100 components and 3 plugins with Vanilla JS.">
+<meta property="og:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-bootstrap-5-dashboard/volt-bootstrap-5-dashboard-preview.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://demo.themesberg.com/volt">
+<meta property="twitter:title" content="Volt - Free Bootstrap 5 Dashboard">
+<meta property="twitter:description" content="Volt is a free and open source Bootstrap 5 Admin Dashboard featuring 11 example pages, 100 components and 3 plugins with Vanilla JS.">
+<meta property="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-bootstrap-5-dashboard/volt-bootstrap-5-dashboard-preview.jpg">
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="{% static 'assets/icos/note_audio_music_3097.ico' %}" type="image/x-icon">
+
+
+<!-- Fontawesome -->
+<link type="text/css" href="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+<!-- Notyf -->
+<link type="text/css" href="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/notyf/notyf.min.css" rel="stylesheet">
+
+<!-- Volt CSS -->
+<link type="text/css" href="https://appsrv1-147a1.kxcdn.com/volt-dashboard/css/volt.css" rel="stylesheet">
+
+    <!-- Specific Page CSS goes HERE  -->
+    
+
+</head> 
+<body class="">
+           
     {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
+    <script>
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
+    });
 
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <input class="btn btn-primary" type="submit" value="Login">
-    </form>
+    Toast.fire({
+      icon: 'error',
+      title: '{{ message }}'
+    });
+    </script>
+{% endif %}
 
-    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+    
 
-{% endblock %}
+    <main>
+
+        <!-- Section -->
+        <section class="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
+            <div class="container">
+                <p class="text-center"><a href="{% url 'index' %}" class="text-gray-700"><i class="fas fa-angle-left mr-2"></i> Back to homepage</a></p>
+                <div class="row justify-content-center form-bg-image" data-background-lg="https://appsrv1-147a1.kxcdn.com/volt-dashboard/img/illustrations/signin.svg">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="mb-4 mb-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <h1 class="mb-0 h3">Create an account</h1>
+                            </div>
+                            <form class="needs-validation" action="{% url 'login' %}" method="post">
+                                {% csrf_token %}
+                                <!-- Form -->
+                                <div class="form-group mb-4">
+                                    <label for="user">Your username</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon3"><span class="fas fa-user"></span></span>
+                                        <input required id="username" name="username" type="text" class="form-control" placeholder="Username" autofocus>
+                                    </div>  
+                                </div>
+                                <!-- End of Form -->
+                                <div class="form-group">
+                                    <!-- Form -->
+                                    <div class="form-group mb-4">
+                                        <label for="password">Your Password</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon4"><span class="fas fa-unlock-alt"></span></span>
+                                            <input required name="password"  type="password" placeholder="Password" class="form-control" id="password" >
+                                        </div>  
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+                                <button type="submit" class="btn btn-block btn-primary">Sign in</button>
+                            </form>
+                            <div class="d-flex justify-content-center align-items-center mt-4">
+                                <span class="font-weight-normal">
+                                    Not registered?
+                                    <a href="{% url 'register' %}" class="font-weight-bold">Create account</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    
+    <!-- Core -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/popper.js/dist/umd/popper.min.js"></script>
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Vendor JS -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/onscreen/dist/on-screen.umd.min.js"></script>
+    
+    <!-- Slider -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/nouislider/distribute/nouislider.min.js"></script>
+    
+    <!-- Jarallax -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/jarallax/dist/jarallax.min.js"></script>
+    
+    <!-- Smooth scroll -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+    
+    <!-- Count up -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/countup.js/dist/countUp.umd.js"></script>
+    
+    <!-- Notyf -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/notyf/notyf.min.js"></script>
+    
+    <!-- Charts -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/chartist/dist/chartist.min.js"></script>
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    
+    <!-- Datepicker -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+    
+    <!-- Simplebar -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/vendor/simplebar/dist/simplebar.min.js"></script>
+
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- Volt JS -->
+    <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard/js/volt.min.js"></script>
+    
+    
+    <!-- Specific Page JS goes HERE  -->
+    
+
+</body>
+</html>

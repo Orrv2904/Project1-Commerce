@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .form import ListingForm
@@ -102,11 +102,11 @@ def createListing(request):
 
             custom_price = form.cleaned_data.get('custom_price')
             if custom_price is not None:
-                existing_bid = Bid.objects.filter(bid=custom_price).first()
+                existing_bid = Bid.objects.filter(bid=custom_price, user=request.user).first()
                 if existing_bid:
                     listing.price = existing_bid
                 else:
-                    bid = Bid.objects.create(bid=custom_price)
+                    bid = Bid.objects.create(bid=custom_price, user=request.user)
                     bid.save()
                     listing.price = bid
 
@@ -126,10 +126,6 @@ def createListing(request):
         "allCategories": allCategories,
     }
     return render(request, "auctions/create.html", context)
-
-
-
-        
 
 
 def login_view(request):
