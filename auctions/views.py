@@ -8,6 +8,9 @@ from django.contrib import messages
 from .models import Listing, User, Category, Comment, Bid
 from django.db.models import F
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 def listing(request, id):
     listing_data = Listing.objects.get(pk=id)
