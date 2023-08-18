@@ -50,6 +50,12 @@
           </div>
         </div>
       </form>
+      {% else %}
+      <div class="row gx-2">
+        <div class="col-auto">
+          <label for="price" class="form-label h4">To be able to bid <a href="{% url 'login' %}" class="nav-link tm-nav-link tm-text-white">Login here!</a></label>
+        </div>
+      </div>
       {% endif %}
     </div>
   </div>

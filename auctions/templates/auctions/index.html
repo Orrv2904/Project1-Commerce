@@ -103,11 +103,7 @@
               <p class="mb-0">{{ listing.description }}</p>
             </div>
             <div class="tm-buy-box">
-              {% if user.is_authenticated %}
-              <a href="{% url 'listing' id=listing.id %}" class="tm-bg-blue tm-text-white tm-buy">buy</a>
-              {% else %}
-              <a href="{% url 'login' %}" class="tm-bg-blue tm-text-white tm-buy">Not signed in.</a>
-              {% endif %}
+              <a href="{% url 'listing' id=listing.id %}" class="tm-bg-blue tm-text-white tm-buy">See details</a>
               <span class="tm-text-blue tm-price-tag">${{ listing.price }}</span>
             </div>
           </div>
