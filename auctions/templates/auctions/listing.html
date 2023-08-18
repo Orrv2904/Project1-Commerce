@@ -34,7 +34,8 @@
     <div class="col-md-8">
       <h2>{{ listing.title }}</h2>
       <p>{{ listing.description }}</p>
-      <p>{{ listing.price }}&nbsp;$</p>
+      <p>{{ listing.owner }}</p>
+      <p>Owner:&nbsp;{{ listing.price }}&nbsp;$</p>
       {% if user.is_authenticated %}
       <form action="{% url 'addBid' id=listing.id %}" method="post" class="mt-3">
         {% csrf_token %}

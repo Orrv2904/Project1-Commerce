@@ -11,7 +11,7 @@ from django.core.paginator import Paginator
 def listing(request, id):
     listing_data = Listing.objects.get(pk=id)
     isListingInWatchlist = request.user in listing_data.watchlist.all()
-    allComments = Comment.objects.filter(listing=listing_data)  # Cambia aquí
+    allComments = Comment.objects.filter(listing=listing_data)
 
     return render(request, "auctions/listing.html", {
         "listing": listing_data,
@@ -38,6 +38,8 @@ def addComment(request, id):
 def addBid(request, id):
     newBid = request.POST['newBid']
     listingData = Listing.objects.get(pk=id)
+    isListingInWatchlist = request.user in listingData.watchlist.all()
+    allComments = Comment.objects.filter(listing=listingData)  # Cambia aquí
     if int(newBid) > listingData.price.bid:
         updateBid = Bid(user=request.user, bid=int(newBid))
         updateBid.save()
@@ -47,14 +49,18 @@ def addBid(request, id):
         return render(request, "auctions/listing.html",{
             "listing": listingData,
             "success_message": success_message,
-            "update": True
+            "update": True,
+            "isListingInWatchlist": isListingInWatchlist,
+            "allComments": allComments,
         })
     else:
         error_message = "Bid update failed. Your bid should be higher than the current highest bid."
         return render(request, "auctions/listing.html",{
             "listing": listingData,
             "error_message": error_message,
-            "update": False
+            "update": False,
+            "isListingInWatchlist": isListingInWatchlist,
+            "allComments": allComments,
         })
 
     
