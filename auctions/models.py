@@ -22,14 +22,14 @@ class Bid(models.Model):
 class Listing(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
-    imageUrl = models.ImageField(upload_to='images/commerce/', blank=True, default='default_image_url')
+    imageUrl = models.ImageField(upload_to='media/images/project1/', blank=True, null=True)
     price = models.ForeignKey(Bid, on_delete=models.CASCADE, blank=True, null=True, related_name="bidPrice")
     isActive = models.BooleanField(default=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name="category")
-    watchlist = models.ManyToManyField(User, blank=True, null=True, related_name="listingWatchlist")
+    watchlist = models.ManyToManyField(User, blank=True, related_name="listingWatchlist")
 
     def __str__(self):
         return f"The title of the song: {self.title} - and is a: {self.category.categoryName}"

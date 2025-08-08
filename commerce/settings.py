@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'commerce.urls'
@@ -76,6 +77,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'commerce.wsgi.application'
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Database
@@ -127,6 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -134,12 +139,38 @@ STATICFILES_FINDERS = [
 ]
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'den3ccjvd',
-    'API_KEY': '294527718744669',
-    'API_SECRET': 'ZZE29WW763hftb2Oiq7QmeFvCQg'
+    'API_KEY': '554688635689583',
+    'API_SECRET': 'adBQr8y2OHk3L6rqWKmFuQDkFy4',
+    'STATICFILES_MANAGER': 'cloudinary_storage.storage.StaticHashedCloudinaryStorage',
+    'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpe', 'jpeg', 'jpc', 'jp2', 'j2k', 'wdp', 'jxr', 'hdp', 'png', 'gif', 'webp', 'bmp', 'tif', 'tiff', 'ico'],
+    'MAGIC_FILE_PATH': 'magic',
+    'INVALID_IMAGE_PATH': 'https://res.cloudinary.com/den3ccjvd/image/upload/v1/static/images/invalid_image',
+    'DEFAULT_RANGE': 'http_range',
+    'IGNORE_FILENAME': False,
+    'KEEP_ORIGINAL_NAME': False,
+    'STATIC_IMAGES_TRANSFORMATIONS': {
+        'jpg': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'jpe': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'jpeg': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'jpc': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'jp2': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'j2k': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'wdp': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'jxr': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'hdp': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'png': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'gif': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'webp': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'bmp': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'tif': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'tiff': [{'quality': 'auto:good', 'fetch_format': 'auto'}],
+        'ico': [{'quality': 'auto:good', 'fetch_format': 'auto'}]
+    }
 }
 
 LOGIN_REDIRECT_URL = '/'

@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: commerce-auctions
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn commerce.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DJANGO_SETTINGS_MODULE
+        value: commerce.settings
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: CLOUDINARY_CLOUD_NAME
+        value: den3ccjvd
+      - key: CLOUDINARY_API_KEY
+        value: 554688635689583
+      - key: CLOUDINARY_API_SECRET
+        value: adBQr8y2OHk3L6rqWKmFuQDkFy4
+      - key: DATABASE_URL
+        fromDatabase:
+          name: commerce-db
+          property: connectionString
+    databases:
+      - name: commerce-db
+        databaseName: commerce
+        user: commerce

@@ -45,11 +45,11 @@
               <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                  <a href="" class="nav-link tm-nav-link tm-text-white">{{ user.username }}</a>
+                  <span class="nav-link tm-nav-link tm-text-white">{{ user.username }}</span>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                  <a href="" class="nav-link tm-nav-link tm-text-white"> Not signed in.</a>
+                  <span class="nav-link tm-nav-link tm-text-white"> Not signed in.</span>
                 </li>
                 {% endif %}
                 <li class="nav-item">
